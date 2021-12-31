@@ -27,7 +27,7 @@ string GetNumbers(string optionInput)
     if (optionInput == "1")                                       // если выбран вариант заполнения путем ввода с клавиатуры
     {
         Console.Clear();
-        Console.WriteLine("Веедите целые числа в одну строку через запятую");
+        Console.WriteLine("Введите целые числа в одну строку через запятую");
         string inputText = Console.ReadLine();
         result = TextFormatter(inputText);                      // форматируем введенную строку
     }
@@ -96,7 +96,8 @@ string TextFormatter(string text)
     }
 }
 
-// метод для определения количества чисел в отформатированной строке (числа разделяются запятой)
+// метод для определения количества чисел в отформатированной строке 
+// (после каждого числа в строке стоит запятая, поэтому считаем по количеству запятых)
 int ElementsCounter(string inputText)                     
 {
     int counter = 0;
@@ -110,17 +111,17 @@ int ElementsCounter(string inputText)
 // метод для получения массива целых чисел из введенной строки
 int[] NumbersReader(string text)                 
 {
-    int counter = ElementsCounter(text);
+    int counter = ElementsCounter(text);        // определяем, сколько в строке содержится чисел
     int[] result = CreateArray(counter);
     for (int i = 0; i < counter; i++)   
     {
-        int posComma = 0;
+        int posComma = 0;                       // позиция первой по счету запятой в строке (слева)
         string temp = string.Empty;
         while (text[posComma] != ',' )
             posComma++;
-        temp = text.Substring(0, posComma);
-        result[i] = Convert.ToInt32(temp);
-        text = text.Substring(posComma +1);
+        temp = text.Substring(0, posComma);     // отрезаем от строки несколько первых символов до запятой
+        result[i] = Convert.ToInt32(temp);      // конвертируем полученное значение в число
+        text = text.Substring(posComma +1);     // оставляем в строке то, что осталось после запятой
     }
     return result;
 }
