@@ -72,7 +72,7 @@ string TextFormatter(string text)
         if ( (i != 0) && (text[i] == '-') && ((char)text[i -1] >= 48) && ((char)text[i -1] <= 57 ) ) result += $"";
         else result += $"{text[i]}";
     }
-    if ( (result == "") || (result == "-") || (result == ",") ) return $"";
+    if ( (result == "") || (result == "-") || (result == ",") || (result == ",-") || (result == "-,") ) return $"";
     else
     {
         // удаляем лишние минусы и запятые в конце строки
