@@ -45,7 +45,6 @@ string GetNumbers(string optionInput)
     return result;
 }
 
-
 // метод для форматирования введенный строки с числами
 string TextFormatter(string text)                   
 {
@@ -97,7 +96,38 @@ string TextFormatter(string text)
     }
 }
 
+// метод для определения количества чисел в отформатированной строке (числа разделяются запятой)
+int ElementsCounter(string inputText)                     
+{
+    int counter = 0;
+    for (int i = 0; i < inputText.Length; i++)
+    {
+        if (inputText[i] == ',') counter++;
+    }
+    return counter;
+}
+
+// метод для получения массива целых чисел из введенной строки
+int[] NumbersReader(string text)                 
+{
+    int counter = ElementsCounter(text);
+    int[] result = CreateArray(counter);
+    for (int i = 0; i < counter; i++)   
+    {
+        int posComma = 0;
+        string temp = string.Empty;
+        while (text[posComma] != ',' )
+            posComma++;
+        temp = text.Substring(0, posComma);
+        result[i] = Convert.ToInt32(temp);
+        text = text.Substring(posComma +1);
+    }
+    return result;
+}
 
 Console.Clear();
 string optionInput = ChooseInput(1,2);
 string inputText = GetNumbers(optionInput);
+int size = ElementsCounter(inputText);      // определяем размер исходного массива чисел
+int[] allNumbers = CreateArray(size);       // создаем исходный массив чисел
+allNumbers = NumbersReader(inputText);      // заполняем исходный массив чисел
