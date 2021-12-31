@@ -153,6 +153,27 @@ int[] GetEvenNumbers(int[] arr)
     return result;
 }
 
+void PrintArray(int[] arr)
+{  
+    for (int i = 0; i < arr.Length; i++)
+    {
+        Console.Write($"{arr[i]}");
+        if (i != arr.Length -1)
+            Console.Write(", ");
+    }
+}
+
+// метод для вывода результата на экран в требуемом формате
+void PrintResult(int[] arrInit, int[] arrRes)
+{
+    Console.Clear();
+    Console.Write("[");
+    PrintArray(arrInit);
+    Console.Write("] -> [");
+    PrintArray(arrRes);
+    Console.Write("]\n");
+}
+
 Console.Clear();
 string optionInput = ChooseInput(1,2);
 string inputText = GetNumbers(optionInput);
@@ -162,3 +183,4 @@ allNumbers = NumbersReader(inputText);      // заполняем исходны
 size = EvenCounter(allNumbers);             // определяем размер итогового массива по количеству четных чисел в нем
 int[] evenNumbers = CreateArray(size);      // создаем массив для хранения четных чисел
 evenNumbers = GetEvenNumbers(allNumbers);   // сортируем исходный массив и добавляем в итоговый массив четные числа 
+PrintResult(allNumbers, evenNumbers);       // выводим на экран результат работы программы в требуемом формате
