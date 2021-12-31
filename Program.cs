@@ -125,9 +125,40 @@ int[] NumbersReader(string text)
     return result;
 }
 
+// метод для определения количества четных чисел в исходном массиве
+int EvenCounter(int[] arr)                     
+{
+    int counter = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] % 2 == 0) counter++;
+    }
+    return counter;
+}
+
+// метод для нахождения четных элементов в исходном массиве
+int[] GetEvenNumbers(int[] arr)                              
+{
+    int count = arr.Length;
+    int j = 0;
+    int[] result = CreateArray(EvenCounter(arr));
+    for (int i = 0; i < count; i++)
+    {
+        if(arr[i] % 2 == 0)
+        {
+            result[j] = arr[i];
+            j++;
+        }
+    }
+    return result;
+}
+
 Console.Clear();
 string optionInput = ChooseInput(1,2);
 string inputText = GetNumbers(optionInput);
 int size = ElementsCounter(inputText);      // определяем размер исходного массива чисел
 int[] allNumbers = CreateArray(size);       // создаем исходный массив чисел
 allNumbers = NumbersReader(inputText);      // заполняем исходный массив чисел
+size = EvenCounter(allNumbers);             // определяем размер итогового массива по количеству четных чисел в нем
+int[] evenNumbers = CreateArray(size);      // создаем массив для хранения четных чисел
+evenNumbers = GetEvenNumbers(allNumbers);   // сортируем исходный массив и добавляем в итоговый массив четные числа 
