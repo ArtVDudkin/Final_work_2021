@@ -50,25 +50,36 @@ string TextFormatter(string text)
 {
     string result = String.Empty;
     int length = text.Length;
+    string enabledSimbols = $",-0123456789";            // допустимые символы, которые могут быть в строке
     for (int i = 0; i < length; i++)
-    {   // исключаем все другие символы, кроме ',-0123456789'      // 44 = ','    45 = '-'     48-57 = '0..9'
-        if ( ((char)text[i] >= 44) && ((char)text[i] <= 57) && ((char)text[i] != 46) && ((char)text[i] != 47) )
-            result += text[i];      
+    {   // исключаем все другие символы, кроме ',-0123456789'     
+        for (int j = 0; j < enabledSimbols.Length; j++)
+            if (text[i] == enabledSimbols[j])
+                result += text[i];
     }
     text = result;
     length = text.Length; 
     result = string.Empty;
     for (int i = 0; i < length; i++)
-    {   // удаляем повторяющиеся запятые и минусы
-        if ( (i != (length -1)) && (text[i] == '-') && (text[i +1] == '-') ) result += $"";
-        else if ( (i != (length -1)) && (text[i] == ',') && (text[i +1] == ',') ) result += $"";
+    {   // удаляем некорректные конструкции типа ,,--,,
+        if ( (i != (length -1)) && (text[i] == '-') && (text[i + 1] == ',') ) result += $"";
+        else if ( (i != (length -1)) && (text[i] == '-') && (text[i + 1] == '-') ) result += $"";
         else result += $"{text[i]}";
     }
     text = result;
     length = text.Length; 
     result = string.Empty;
     for (int i = 0; i < length; i++)
-    {   // если минус стоит после числа, то удаляем его
+    {   // удаляем повторяющиеся запятые и минусы
+        if ( (i != (length -1)) && (text[i] == '-') && (text[i + 1] == '-') ) result += $"";
+        else if ( (i != (length -1)) && (text[i] == ',') && (text[i + 1] == ',') ) result += $"";
+        else result += $"{text[i]}";
+    }
+    text = result;
+    length = text.Length; 
+    result = string.Empty;
+    for (int i = 0; i < length; i++)
+    {   // если минус ошибочно указан после числа, то удаляем его
         if ( (i != 0) && (text[i] == '-') && ((char)text[i -1] >= 48) && ((char)text[i -1] <= 57 ) ) result += $"";
         else result += $"{text[i]}";
     }
